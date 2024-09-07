@@ -1,0 +1,84 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="{% static 'css/styless.css' %}">
+    <link rel="icon" href="{% static 'images/Logo.png' %}" type="image/x-icon">
+    <title>ZAPAS</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <h1>ZAPAS</h1>
+        </div>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url "Inicio" %}">INICIO</a>
+                </li>
+                <li>
+                    <a href="{% url "Tienda" %}">CATALOGO</a>
+                </li>
+                <li>
+                    <a href="{% url "cart" %}"><img src="{% static "images/Logo carro.png" %}" id="logo-carrito"></a>
+                </li>
+                <li>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}"><i class='bx bx-user-circle' style='color:red'></i></a>
+                    {% else %}
+                        <a href="{% url 'login' %}"><i class='bx bx-user-circle'></i></a>
+                    {% endif %}
+                </li>
+            </ul> 
+        </nav>
+        <div class="menu-btn">
+            <label for="menu"><div class="bx bx-menu" id="menu-icon"></div></label>
+        </div>
+        <input type="checkbox" id="menu">
+        <div class="container-menu">
+            <div class="cont-menu">
+                <nav>
+                    <a href="{% url "login" %}">Login</a>
+                    <a href="{% url "Inicio" %}">Inicio</a>
+                    <a href="{% url "Tienda" %}">Catalogo</a>
+                    <a href="{% url "cart" %}">Carrito de compras</a>
+                </nav>
+                <label for="menu"><i class='bx bx-x-circle' style='color:#ffffff'></i></label>
+            </div>
+        </div>
+    </header>
+    {% block content %}
+        <!--Codigo que viene de templates-->
+        <strong>Contenido del bloque original</strong>
+    {% endblock %}
+
+    <footer>
+        <div class="info-help">
+            <p>Ayuda
+
+                Un asesor de clientes estará disponible: <br>Lunes a Viernes de 9 am- 8 pm y Sábado de 10 am- 6 pm <br>
+                llamándonos al+52 800 999 1807 También puede contactarnos <br> o enviarnos un correo electrónico a la
+                dirección Zapas@gmail.com
+            </p>
+        </div>
+        <div class="icons">
+            <p>
+                Visitanos en nuestras redes
+            </p>
+            <div id="icons">
+                <a href="#"><i class='bx bxl-instagram-alt' style='color:#fffefe' ></i></a>
+                <a href="#"><i class='bx bxl-facebook-square' style='color:#fffefe' ></i></a>
+                <a href="#"><i class='bx bxl-youtube' style='color:#fffefe'></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

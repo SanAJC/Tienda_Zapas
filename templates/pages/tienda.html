@@ -1,0 +1,49 @@
+{% extends "layouts/layout.html" %}
+{% load static%}
+
+
+{% block content %}
+    <div class="content">
+        <h1>Catalogo</h1>
+        <div>
+            <label for="filtros">Filtros</label>
+        </div>
+        <input type="checkbox" id="filtros">
+        <div class="container-menu">
+            <div class="cont-menu">
+                <nav>
+                    <a href="{% url "Tienda" %}">Todos los productos</a>
+                    {% for category  in links %}
+                    <a href="{{ category.get_url}}">{{ category.category_name}}</a>
+                    {% endfor %}
+                </nav>
+                <label for="filtros" id="equis"> <i class='bx bx-x-circle' style='color:#ffffff'></i></label>
+
+            </div>
+        </div>
+    </div>
+
+
+    <section class="gale">
+
+        <div class="products-store">
+            {% for product in products %}
+            <article class="product-store">
+                <div class="image-product-store">
+                    <a href="{{product.get_url}}">
+                        <img src="{{product.images.url}}" id="img">
+                        <img src="{{product.images_before.url}}" id="imgg">
+                    </a>
+                </div>
+                <div class="info">
+                    <a href="{{product.get_url}}">{{product.product_name}}</a>
+                    <p>$ {{product.price}}</p>
+                    <button id="button"><a href="{% url "cart" %}"><img src="{% static "images/Logo carro.png" %}" id="lg"></a></button>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}
+

@@ -1,0 +1,90 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styless.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="icon" href="{% static 'images/Logo.png' %}" type="image/x-icon">
+
+    <title>Acceso</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>ZAPAS</h1>
+        </div>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url "Inicio" %}">INICIO</a>
+                </li>
+                <li>
+                    <a href="{% url "Tienda" %}">CATALOGO</a>
+                </li>
+                <li>
+                    <a href="{% url "cart" %}"><img src="{% static "images/Logo carro.png" %}" id="logo-carrito"></a>
+                </li>
+                <li>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}"><i class='bx bx-user-circle' style='color:red'></i></a>
+                    {% else %}
+                        <a href="{% url 'login' %}"><i class='bx bx-user-circle'></i></a>
+                    {% endif %}
+                </li>
+            </ul> 
+        </nav>
+        <div class="menu-btn">
+            <label for="menu"><div class="bx bx-menu" id="menu-icon"></div></label>
+        </div>
+        <input type="checkbox" id="menu">
+        <div class="container-menu">
+            <div class="cont-menu">
+                <nav>
+                    <a href="{% url "login" %}">Login</a>
+                    <a href="{% url "Inicio" %}">Inicio</a>
+                    <a href="{% url "Tienda" %}">Catalogo</a>
+                    <a href="{% url "cart" %}">Carrito de compras</a>
+                </nav>
+                <label for="menu"><i class='bx bx-x-circle' style='color:#ffffff'></i></label>
+            </div>
+        </div>
+    </header>
+    
+    <img src="{% static 'images/Ofertas banner.jpg' %}" id="fondo-registro">
+    <form  method="POST" action="{% url "login"%}">
+        {% csrf_token %}
+        <div class="container-form-login">
+            <div class="register-text">
+                <div id="circle">
+                    <i class='bx bxs-circle' style='color:#fa4747'  ></i>
+                </div>
+                <div>
+                    <h3>Acceso</h2>
+                </div>
+            </div>
+            <div class="register-p">
+                <input type="email" name="email" placeholder="Correo electronico" id="input-register" required autocomplete>
+            </div>
+            <div class="register-p">
+                <input type="password" name="password" placeholder="Contraseña" id="input-register" required autocomplete>
+            </div>
+            
+            <div class="register-b">
+                <button type="submit">Acceder</button>
+            </div>
+            <p>Si no cuentas con una cuenta accede por aquí <a href="{% url "register" %}" id="i">Registro</a></p>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" style="color: red; background-color: #f8d7da; border-color: #f5c6cb; margin-left: 30px;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+    </form>
+</body>
+</html>

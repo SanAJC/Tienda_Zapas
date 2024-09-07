@@ -1,0 +1,93 @@
+{% extends "layouts/layout.html" %}
+{% load static%}
+
+{% block content %}
+    <div class="content-cart">
+        <div class="cart">
+            <h2>Mi carrito</h2>
+            {% for cart_item in cart_items %}
+            <article class="product-cart">
+                <div class="product-cart-img">
+                    <a href="{{cart_item.product.get_url}}">
+                        <img src="{{cart_item.product.images.url}}" id="img-cart">
+                    </a>
+                </div>
+                <div class="product-cart-info">
+                    <h3>{{cart_item.product.product_name}}</h3>
+                    <br>
+                    <div id="date-cart">
+                        <div id="cart-date">
+                            <p>Precio</p>
+                            <br> 
+                            <p>Cantidad</p>
+                            <br>
+                            <p>Talla</p>
+                        </div>
+                        <div id="cart-datee">
+                            <p>$ {{cart_item.subtotal}}</p>
+
+                            
+                            <div class="buttons">
+                                <button type="button">
+                                    <a href="{% url "remove_cart" cart_item.product.id cart_item.id %}"><i class='bx bx-minus'></i></a>
+                                </button>
+                                <input type="text"value="{{cart_item.quantity}}"/>
+                                <form action="{% url "add_cart" cart_item.product.id %}" method="post">
+                                    {% csrf_token %}
+                                    {% for item in cart_item.variations.all %}
+                                        <input type="hidden" name="{{item.variation_category | capfirst}}" value="{{item.variation_value | capfirst}}">
+                                    {% endfor %}
+                                    <button type="submit">
+                                        <a><i class='bx bx-plus'></i><a>
+                                    </button>
+                                </form>
+                            </div>
+                            <br>
+                            <p>
+                                {% if cart_item.variations.all %}
+                                    {% for item in cart_item.variations.all %}
+                                        {{item.variation_value | capfirst}} <br>
+                                    {% endfor %}
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+            {% endfor %}
+        </div>
+
+        <div class="info-cart">
+            <h2>Resumen del pedido</h2>
+
+            <div class="info-buy">
+                <div id="date-buy">
+                    <p>Direccion</p>
+                    <br>
+                    <p>Envio</p>
+                    <br>
+                    <br>
+                    <p id="total">Total</p>
+                </div>
+                <div id="info-buy-det">
+                    <p>Magadalena,Colombia</p>
+                    <br>
+                    <p>Gratis</p>
+                    <br>
+                    <br>
+                    <p id="total">${{total}}</p>
+                </div>
+            </div>
+            <button type="submit">Finalizar compra</button>
+            <div id="icons-cart">
+                <a href="#"><img src="{% static 'images/Logo py.png' %}"  ></a>
+                <a href="#"><img src="{% static 'images/Logo visa.png' %}" ></a>
+                <a href="#"><img src="{% static 'images/Logo card.png' %}" ></a>
+            </div>
+
+        </div>
+
+    </div>
+    <br>
+{% endblock %}

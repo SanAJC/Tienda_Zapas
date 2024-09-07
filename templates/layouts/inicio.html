@@ -1,0 +1,45 @@
+{% extends "layouts/layout.html" %}
+
+{% load static%}
+
+{% block content %}
+    <div class="slider-container">
+        <h1 id="text">NUEVAS OFERTAS</h1>
+        <div class="slider-frame">
+
+            <ul>
+                <li><img src="{% static "images/slider1.jpg" %}"></li>
+                <li><img src="{% static "images/slider2.jpg" %}"></li>
+                <li><img src="{% static "images/slider3.jpg" %}"></li>
+                <li><img src="{% static "images/slider4.jpg" %}"></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <br>
+    <h2>Productos mas vendidos </h2>
+    <section class="gale">
+
+        <div class="products"> 
+            {% for product in products %}
+                {% if product.it_is_very_sold == True %}
+                    <article class="product">
+                        <div class="image-product">
+                            <a href="{{product.get_url}}">
+                                <img src="{{product.images.url}}" id="img">
+                                <img src="{{product.images_before.url}}" id="imgg">
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a href="{{product.get_url}}">{{product.product_name}}</a>
+                            <p>{{product.price}}</p>
+                            <button id="button" ><a href="{% url "cart" %}"><img src="{% static "images/Logo carro.png" %}" id="lg"></a></button>
+                        </div>
+                    </article>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock  %}
